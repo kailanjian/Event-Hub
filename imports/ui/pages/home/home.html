@@ -1,0 +1,52 @@
+<template name="App_home">
+  <div class="container">
+    <span class="h1 greeting">
+      Welcome to Event Hub{{#if currentUser}}, {{currentUser.profile.name}}{{/if}}!
+      {{#if currentUser}}
+      <input type="button" id="button-logout" class="btn btn-default" value="Logout" />
+      {{else}}
+      <button type="button" id="button-login" class="btn btn-default">
+        Login <i class="fa fa-twitter"></i>
+      </button>
+      {{/if}}
+    </span>
+
+    <br />
+    <span class="h2 greeting">
+      Search for a location, find popular destinations in the area.
+    </span>
+    
+    <form id="form-search">
+      <div class="input-group input-group-unstyled">
+        <input type="text" class="form-control" id="input-search" placeholder="Search..."/>
+        <span class="input-group-addon">
+          <input type="submit" class="btn btn-primary" id="form-search" />
+        </span>
+      </div>
+    </form>
+    {{#if message}}<span class="message">{{message}}</span>{{/if}}
+    {{#each businesses}}
+      {{>business}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="business">
+    <div class="business">
+      <img src="{{image_url}}" alt="Business Image Not Available"/>
+      <div class="business-details">
+        <a href="{{url}}">
+          <h2 class="business-title">{{name}} | {{rating}} Stars</h2>
+        </a>
+        <h3 class="business-description">
+          {{location.address1}}
+          {{#if location.address2}}{{location.address2}}{{/if}}
+          {{location.city}}
+          {{location.zip_code}}
+        </h3>
+        <button class="button-going btn btn-primary {{#if isUserGoing}}active{{/if}}" type="toggle" aria-pressed="{{#if isUserGoing}}true{{else}}false{{/if}}">
+         <i class="glyphicon {{#if isUserGoing}}glyphicon-check{{else}}glyphicon-unchecked{{/if}}"></i> {{numGoing}} Going 
+        </button>
+      </div>
+    </div>
+</template>
